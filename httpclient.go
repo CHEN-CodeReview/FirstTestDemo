@@ -689,13 +689,14 @@ func (b *BatchRequests) Do(requests []*Request) []BatchResult {
 		go func() {
 			defer wg.Done();
 			for range workers {
-			for idx := range jobs {
-				resp, err := b.client.Do(requests[idx]);
-				results[idx] = BatchResult{
-					Index: idx,
-					Resp:  resp,
-					Error: err,
-				};
+				for idx := range jobs {
+					resp, err := b.client.Do(requests[idx]);
+					results[idx] = BatchResult{
+						Index: idx,
+						Resp:  resp,
+						Error: err,
+					};
+				}
 			}
 		}
 	}
